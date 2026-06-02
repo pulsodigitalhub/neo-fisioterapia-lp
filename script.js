@@ -86,6 +86,44 @@ window.addEventListener("resize", () => {
   });
 });
 
+const revealElements = document.querySelectorAll(
+  ".differentials-grid article, .lead-copy, .lead-form, .symptom-list article, .service-card, .team-card, .space-card, .journey-list article, .contact-copy, .map-frame, .faq-list details, .footer-main > *",
+);
+
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  revealElements.forEach((element) => element.classList.add("is-visible"));
+} else if ("IntersectionObserver" in window) {
+  revealElements.forEach((element) => element.classList.add("reveal"));
+
+  const revealVisibleElements = () => {
+    revealElements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        element.classList.add("is-visible");
+      }
+    });
+  };
+
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+  );
+
+  revealElements.forEach((element) => revealObserver.observe(element));
+  revealVisibleElements();
+  window.addEventListener("scroll", revealVisibleElements, { passive: true });
+  window.setTimeout(revealVisibleElements, 120);
+} else {
+  revealElements.forEach((element) => element.classList.add("is-visible"));
+}
+
 const leadForm = document.querySelector("#leadForm");
 
 if (leadForm) {

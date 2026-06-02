@@ -191,6 +191,12 @@ h3 {
   border-radius: 999px;
   font-weight: 800;
   text-align: center;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(29, 29, 27, 0.14);
 }
 
 .button.primary {
@@ -305,17 +311,42 @@ h3 {
 }
 
 .lead-section {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(320px, 440px);
   gap: clamp(28px, 5vw, 56px);
   align-items: start;
+  overflow: hidden;
   padding: clamp(54px, 8vw, 88px) clamp(20px, 4vw, 56px);
-  background: var(--white);
+  background:
+    linear-gradient(105deg, rgba(24, 70, 74, 0.9), rgba(24, 70, 74, 0.56)),
+    url("./assets/space/sala-fisio-4.jpg") center / cover;
   border-bottom: 1px solid var(--line);
+}
+
+.lead-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 18% 18%, rgba(232, 213, 156, 0.26), transparent 32%);
+  pointer-events: none;
+}
+
+.lead-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .lead-copy {
   max-width: 680px;
+}
+
+.lead-copy .eyebrow {
+  color: var(--gold-soft);
+}
+
+.lead-copy h2 {
+  color: var(--white);
 }
 
 .lead-copy p:not(.eyebrow) {
@@ -523,6 +554,56 @@ h3 {
   margin-bottom: 0;
   font-size: 14px;
   line-height: 1.4;
+}
+
+.differentials-grid article,
+.symptom-list article,
+.service-card,
+.team-card,
+.space-card,
+.journey-list article,
+.faq-list details,
+.lead-form {
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.differentials-grid article:hover,
+.symptom-list article:hover,
+.service-card:hover,
+.team-card:hover,
+.space-card:hover,
+.journey-list article:hover,
+.faq-list details:hover {
+  transform: translateY(-4px);
+  border-color: rgba(155, 133, 73, 0.42);
+  box-shadow: 0 22px 52px rgba(29, 29, 27, 0.14);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.62s ease, transform 0.62s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .split {
