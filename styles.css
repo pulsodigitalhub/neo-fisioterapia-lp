@@ -685,15 +685,24 @@ h3 {
 }
 
 .contact-section {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
   gap: clamp(28px, 5vw, 56px);
   align-items: start;
+  overflow: hidden;
   margin: 0 clamp(20px, 4vw, 56px) clamp(44px, 8vw, 82px);
   padding: clamp(36px, 6vw, 64px);
   color: var(--white);
-  background: var(--teal);
+  background:
+    linear-gradient(135deg, rgba(24, 70, 74, 0.94), rgba(29, 29, 27, 0.78)),
+    url("https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/%C3%81guas_Claras%2C_Bras%C3%ADlia_-_DF%2C_Brazil_-_panoramio_%2835%29.jpg/1280px-%C3%81guas_Claras%2C_Bras%C3%ADlia_-_DF%2C_Brazil_-_panoramio_%2835%29.jpg") center / cover;
   border-radius: 8px;
+}
+
+.contact-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .contact-section .eyebrow {
@@ -703,6 +712,18 @@ h3 {
 .contact-section p {
   max-width: 680px;
   color: #f2f4ec;
+}
+
+.photo-credit {
+  margin-top: 18px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.68) !important;
+  font-size: 12px;
+}
+
+.photo-credit a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .map-frame {
