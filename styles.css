@@ -92,8 +92,9 @@ a {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.86fr);
-  gap: clamp(28px, 5vw, 68px);
+  grid-template-columns: minmax(420px, 640px) minmax(360px, 520px);
+  justify-content: center;
+  gap: clamp(32px, 4vw, 56px);
   align-items: center;
   min-height: min(760px, calc(100vh - 72px));
   padding: clamp(34px, 6vw, 76px) clamp(20px, 4vw, 56px);
@@ -103,7 +104,7 @@ a {
 }
 
 .hero-content {
-  max-width: 780px;
+  max-width: 640px;
 }
 
 .hero-media {
