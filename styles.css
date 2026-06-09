@@ -314,9 +314,9 @@ h3 {
 .lead-section {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 440px);
+  grid-template-columns: minmax(0, 0.78fr) minmax(340px, 500px);
   gap: clamp(28px, 5vw, 56px);
-  align-items: start;
+  align-items: center;
   overflow: hidden;
   padding: clamp(54px, 8vw, 88px) clamp(20px, 4vw, 56px);
   background:
@@ -347,12 +347,48 @@ h3 {
 }
 
 .lead-copy h2 {
+  max-width: 760px;
+  margin-bottom: 18px;
   color: var(--white);
 }
 
 .lead-copy p:not(.eyebrow) {
-  color: var(--muted);
-  font-size: 19px;
+  max-width: 660px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 21px;
+  line-height: 1.45;
+}
+
+.lead-benefits {
+  display: grid;
+  gap: 10px;
+  max-width: 620px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lead-benefits li {
+  position: relative;
+  padding: 12px 16px 12px 42px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  font-weight: 700;
+}
+
+.lead-benefits li::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--gold-soft);
+  border-radius: 50%;
+  transform: translateY(-50%);
 }
 
 .section {
@@ -809,31 +845,50 @@ h3 {
 .lead-form {
   align-self: start;
   display: grid;
-  gap: 18px;
-  padding: clamp(22px, 4vw, 32px);
+  gap: 20px;
+  padding: clamp(24px, 4vw, 36px);
   color: var(--ink);
   background: var(--white);
-  border: 1px solid rgba(232, 213, 156, 0.38);
+  border: 3px solid var(--gold-soft);
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.24);
+}
+
+.lead-form-header {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.lead-form-header strong {
+  color: var(--teal);
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.lead-form-header span {
+  color: var(--muted);
+  font-size: 15px;
 }
 
 .lead-form label {
   display: block;
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .lead-form input {
   width: 100%;
-  min-height: 52px;
-  padding: 0 16px;
+  min-height: 60px;
+  padding: 0 18px;
   color: var(--ink);
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--white);
+  border: 2px solid rgba(24, 70, 74, 0.18);
   border-radius: 8px;
   font: inherit;
+  font-size: 18px;
 }
 
 .lead-form input:focus {
@@ -843,14 +898,20 @@ h3 {
 
 .lead-form .button {
   width: 100%;
+  min-height: 62px;
+  margin-top: 2px;
   border: 0;
   cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 16px 34px rgba(24, 70, 74, 0.28);
 }
 
 .form-note {
   margin-bottom: 0;
-  color: var(--muted) !important;
-  font-size: 14px;
+  color: var(--teal) !important;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
 }
 
 @media (max-width: 1080px) {
@@ -933,6 +994,7 @@ h3 {
 
 @media (max-width: 1080px) {
   .hero,
+  .lead-section,
   .split,
   .contact-section {
     grid-template-columns: 1fr;
@@ -999,6 +1061,19 @@ h3 {
     padding: 36px 20px;
   }
 
+  .lead-copy p:not(.eyebrow) {
+    font-size: 17px;
+  }
+
+  .lead-benefits {
+    margin-top: 20px;
+  }
+
+  .lead-benefits li {
+    padding: 11px 14px 11px 38px;
+    font-size: 14px;
+  }
+
   .contact-section h2,
   .lead-section h2 {
     font-size: 30px;
@@ -1007,17 +1082,22 @@ h3 {
 
   .lead-form {
     gap: 16px;
-    padding: 18px;
+    padding: 20px;
+  }
+
+  .lead-form-header strong {
+    font-size: 21px;
   }
 
   .lead-form input {
-    min-height: 50px;
+    min-height: 54px;
+    font-size: 16px;
   }
 
   .lead-form .button {
-    min-height: 52px;
+    min-height: 56px;
     padding-inline: 16px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.2;
   }
 

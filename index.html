@@ -8,7 +8,7 @@
       name="description"
       content="Clínica de fisioterapia especializada, pilates, RPG, acupuntura e terapia por ondas de choque em Águas Claras, Brasília."
     />
-    <link rel="stylesheet" href="./styles.css?v=17" />
+    <link rel="stylesheet" href="./styles.css?v=18" />
   </head>
   <body>
     <header class="site-header">
@@ -82,10 +82,23 @@
 
       <section class="lead-section" id="agendamento">
         <div class="lead-copy">
-          <p class="eyebrow">Agendamento</p>
-          <h2>Agende sua avaliação</h2>
+          <p class="eyebrow">Agendamento pelo WhatsApp</p>
+          <h2>Preencha seus dados para falar com a clínica.</h2>
+          <p>
+            Informe nome e telefone. Em seguida, você será direcionado ao
+            WhatsApp da Neo para combinar o melhor horário de atendimento.
+          </p>
+          <ul class="lead-benefits" aria-label="Vantagens do contato">
+            <li>Retorno direto pela equipe</li>
+            <li>Orientação sobre convênios e procedimentos</li>
+            <li>Contato rápido para agendar sua avaliação</li>
+          </ul>
         </div>
         <form class="lead-form" id="leadForm">
+          <div class="lead-form-header">
+            <strong>Entre em contato agora</strong>
+            <span>Preencha os campos abaixo</span>
+          </div>
           <div>
             <label for="leadName">Nome</label>
             <input id="leadName" name="name" type="text" autocomplete="name" required />
@@ -104,8 +117,7 @@
           </div>
           <button class="button primary" type="submit">Entrar em contato</button>
           <p class="form-note">
-            Ao enviar, você será direcionado ao WhatsApp da clínica com seus
-            dados preenchidos na mensagem.
+            O botão abre o WhatsApp da clínica com seus dados preenchidos.
           </p>
         </form>
       </section>
