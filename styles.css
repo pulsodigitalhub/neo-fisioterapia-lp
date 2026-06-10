@@ -11,6 +11,7 @@
   --teal: #18464a;
   --white: #ffffff;
   --shadow: 0 18px 48px rgba(29, 29, 27, 0.12);
+  --container: 1240px;
 }
 
 * {
@@ -243,12 +244,12 @@ h3 {
 }
 
 .differentials-section .section-heading {
-  max-width: 860px;
-  margin-bottom: 26px;
+  max-width: var(--container);
+  margin: 0 auto 26px;
 }
 
 .differentials-section h2 {
-  max-width: 760px;
+  max-width: 860px;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.08;
 }
@@ -257,6 +258,8 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
 .differentials-grid article {
@@ -314,7 +317,8 @@ h3 {
 .lead-section {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(340px, 500px);
+  grid-template-columns: minmax(0, 680px) minmax(340px, 500px);
+  justify-content: center;
   gap: clamp(28px, 5vw, 56px);
   align-items: center;
   overflow: hidden;
@@ -396,8 +400,13 @@ h3 {
 }
 
 .section-heading {
-  max-width: 720px;
-  margin-bottom: 34px;
+  max-width: var(--container);
+  margin: 0 auto 34px;
+}
+
+.section-heading > h2,
+.section-heading > p:not(.eyebrow) {
+  max-width: 760px;
 }
 
 .section-heading p:not(.eyebrow) {
@@ -409,6 +418,8 @@ h3 {
 .service-grid {
   display: grid;
   gap: 16px;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
 .symptom-list {
@@ -561,6 +572,8 @@ h3 {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
 .team-card {
@@ -645,7 +658,8 @@ h3 {
 
 .split {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr;
+  grid-template-columns: minmax(0, 380px) minmax(0, 720px);
+  justify-content: center;
   gap: clamp(28px, 5vw, 72px);
 }
 
@@ -684,6 +698,8 @@ h3 {
 .space-gallery {
   display: grid;
   gap: 16px;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
 .gallery-section {
@@ -728,7 +744,9 @@ h3 {
   gap: clamp(28px, 5vw, 56px);
   align-items: start;
   overflow: hidden;
-  margin: 0 clamp(20px, 4vw, 56px) clamp(44px, 8vw, 82px);
+  width: calc(100% - 2 * clamp(20px, 4vw, 56px));
+  max-width: var(--container);
+  margin: 0 auto clamp(44px, 8vw, 82px);
   padding: clamp(36px, 6vw, 64px);
   color: var(--white);
   background:
@@ -790,6 +808,7 @@ h3 {
   display: grid;
   gap: 12px;
   max-width: 960px;
+  margin-inline: auto;
 }
 
 .faq-list details {
@@ -852,29 +871,52 @@ h3 {
   border: 3px solid var(--gold-soft);
   border-radius: 8px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.24);
+  counter-reset: lead-step;
 }
 
 .lead-form-header {
   display: grid;
-  gap: 4px;
+  gap: 6px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
 
 .lead-form-header strong {
   color: var(--teal);
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.1;
 }
 
 .lead-form-header span {
-  color: var(--muted);
-  font-size: 15px;
+  color: var(--teal);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.lead-field {
+  counter-increment: lead-step;
 }
 
 .lead-form label {
-  display: block;
-  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: var(--teal);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.lead-field label::before {
+  content: counter(lead-step);
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: var(--white);
+  background: var(--teal);
+  border-radius: 50%;
   font-size: 15px;
   font-weight: 800;
 }
@@ -884,15 +926,21 @@ h3 {
   min-height: 60px;
   padding: 0 18px;
   color: var(--ink);
-  background: var(--white);
-  border: 2px solid rgba(24, 70, 74, 0.18);
+  background: #fffaeb;
+  border: 3px solid var(--teal);
   border-radius: 8px;
   font: inherit;
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.lead-form input::placeholder {
+  color: #a89c7a;
+  font-weight: 400;
 }
 
 .lead-form input:focus {
-  outline: 3px solid rgba(232, 213, 156, 0.52);
+  outline: 4px solid rgba(232, 213, 156, 0.65);
   border-color: var(--gold);
 }
 
@@ -940,6 +988,8 @@ h3 {
   display: grid;
   grid-template-columns: minmax(260px, 1.45fr) repeat(3, minmax(160px, 1fr));
   gap: clamp(28px, 5vw, 64px);
+  max-width: var(--container);
+  margin-inline: auto;
   padding: clamp(44px, 7vw, 72px) clamp(20px, 4vw, 56px);
 }
 
@@ -980,6 +1030,8 @@ h3 {
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  max-width: var(--container);
+  margin-inline: auto;
   padding: 20px clamp(20px, 4vw, 56px);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.58);
@@ -1051,6 +1103,7 @@ h3 {
   }
 
   .contact-section {
+    width: 100%;
     margin-inline: 0;
     margin-bottom: 0;
     padding: 28px 20px;

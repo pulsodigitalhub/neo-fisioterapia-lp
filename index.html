@@ -8,7 +8,7 @@
       name="description"
       content="Clínica de fisioterapia especializada, pilates, RPG, acupuntura e terapia por ondas de choque em Águas Claras, Brasília."
     />
-    <link rel="stylesheet" href="./styles.css?v=18" />
+    <link rel="stylesheet" href="./styles.css?v=19" />
   </head>
   <body>
     <header class="site-header">
@@ -97,14 +97,21 @@
         <form class="lead-form" id="leadForm">
           <div class="lead-form-header">
             <strong>Entre em contato agora</strong>
-            <span>Preencha os campos abaixo</span>
+            <span>Preencha os 2 campos abaixo para falar conosco</span>
           </div>
-          <div>
-            <label for="leadName">Nome</label>
-            <input id="leadName" name="name" type="text" autocomplete="name" required />
+          <div class="lead-field">
+            <label for="leadName">Seu nome</label>
+            <input
+              id="leadName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Ex: Maria Silva"
+              required
+            />
           </div>
-          <div>
-            <label for="leadPhone">Telefone</label>
+          <div class="lead-field">
+            <label for="leadPhone">Seu telefone</label>
             <input
               id="leadPhone"
               name="phone"
