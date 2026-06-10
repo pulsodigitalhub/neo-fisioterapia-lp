@@ -954,6 +954,18 @@ h3 {
   box-shadow: 0 16px 34px rgba(24, 70, 74, 0.28);
 }
 
+.lead-form .button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+  box-shadow: none;
+}
+
+.lead-form .button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .form-note {
   margin-bottom: 0;
   color: var(--teal) !important;

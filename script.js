@@ -1,50 +1,53 @@
+const runtimeScript = document.querySelector('script[src*="script.js"]');
+const assetBaseUrl = new URL("./assets/", runtimeScript?.src || window.location.href);
+
 const spacePhotos = [
   {
     title: "Recepção",
     caption: "Primeiro contato em um ambiente acolhedor no Albany Medical Center.",
-    src: "./assets/space/recepcao-2.jpg",
+    src: new URL("./space/recepcao-2.jpg", assetBaseUrl).href,
     alt: "Recepção da Neo Fisioterapia e Pilates",
   },
   {
     title: "Sala de Pilates",
     caption: "Equipamentos para exercícios orientados de força, mobilidade e controle.",
-    src: "./assets/space/sala-pilates-1.jpg",
+    src: new URL("./space/sala-pilates-1.jpg", assetBaseUrl).href,
     alt: "Sala de pilates equipada da Neo Fisioterapia",
   },
   {
     title: "Fisioterapia",
     caption: "Espaço para reabilitação, exercícios terapêuticos e acompanhamento.",
-    src: "./assets/space/sala-fisio-4.jpg",
+    src: new URL("./space/sala-fisio-4.jpg", assetBaseUrl).href,
     alt: "Sala de fisioterapia da Neo Fisioterapia",
   },
   {
     title: "Cinesioterapia",
     caption: "Área preparada para recursos ativos e recuperação funcional.",
-    src: "./assets/space/sala-cinesioterapia-1.jpg",
+    src: new URL("./space/sala-cinesioterapia-1.jpg", assetBaseUrl).href,
     alt: "Sala de cinesioterapia da Neo Fisioterapia",
   },
   {
     title: "Acupuntura",
     caption: "Sala reservada para atendimentos terapêuticos complementares.",
-    src: "./assets/space/sala-acupuntura-1.jpg",
+    src: new URL("./space/sala-acupuntura-1.jpg", assetBaseUrl).href,
     alt: "Sala de acupuntura da Neo Fisioterapia",
   },
   {
     title: "RPG",
     caption: "Ambiente dedicado ao trabalho postural individualizado.",
-    src: "./assets/space/sala-rpg.jpg",
+    src: new URL("./space/sala-rpg.jpg", assetBaseUrl).href,
     alt: "Sala de RPG da Neo Fisioterapia",
   },
   {
     title: "Consultório",
     caption: "Sala para sua avaliação, orientação e acompanhamento.",
-    src: "./assets/space/consultorio-2.jpg",
+    src: new URL("./space/consultorio-2.jpg", assetBaseUrl).href,
     alt: "Consultório da Neo Fisioterapia",
   },
   {
     title: "Entrada da clínica",
     caption: "Localização no térreo do Albany Medical Center, em Águas Claras.",
-    src: "./assets/space/entrada-clinica-1.jpg",
+    src: new URL("./space/entrada-clinica-1.jpg", assetBaseUrl).href,
     alt: "Entrada da Neo Fisioterapia no Albany Medical Center",
   },
 ];
@@ -143,6 +146,12 @@ const formatPhone = (value) => {
 
 const getPhoneDigits = (value) => value.replace(/\D/g, "");
 
+const LEAD_WEBHOOK_URL = "https://api.icebergcompany.com.br/lead-webhook/neofisioterapia";
+const LEAD_ORIGIN = "neo-fisioterapia-lp";
+const LEAD_UNIT = "Neo Fisioterapia e Pilates";
+const LEAD_WHATSAPP_NUMBER = "5561998240564";
+const LEAD_SUBMIT_LOCK_MS = 5000;
+
 const isValidBrazilPhone = (value) => {
   const digits = getPhoneDigits(value);
 
@@ -162,12 +171,36 @@ const isValidBrazilPhone = (value) => {
 const leadForm = document.querySelector("#leadForm");
 const leadPhone = document.querySelector("#leadPhone");
 const leadFormError = document.querySelector("#leadFormError");
+const leadSubmitButton = leadForm?.querySelector('button[type="submit"]');
+
+let leadFormUnlockTimer = null;
+let leadFormLockedUntil = 0;
 
 const showLeadFormError = (message) => {
   if (!leadFormError) return;
 
   leadFormError.textContent = message;
   leadFormError.classList.toggle("is-visible", Boolean(message));
+};
+
+const setLeadFormLockedState = (isLocked) => {
+  if (!leadForm || !leadSubmitButton) return;
+
+  leadForm.dataset.submitting = String(isLocked);
+  leadForm.setAttribute("aria-busy", String(isLocked));
+  leadSubmitButton.disabled = isLocked;
+  leadSubmitButton.textContent = isLocked ? "Abrindo WhatsApp..." : "Entrar em contato";
+};
+
+const lockLeadFormTemporarily = () => {
+  leadFormLockedUntil = Date.now() + LEAD_SUBMIT_LOCK_MS;
+  window.clearTimeout(leadFormUnlockTimer);
+  setLeadFormLockedState(true);
+
+  leadFormUnlockTimer = window.setTimeout(() => {
+    leadFormLockedUntil = 0;
+    setLeadFormLockedState(false);
+  }, LEAD_SUBMIT_LOCK_MS);
 };
 
 if (leadPhone) {
@@ -186,8 +219,13 @@ if (leadPhone) {
 }
 
 if (leadForm) {
-  leadForm.addEventListener("submit", (event) => {
+  leadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    if (Date.now() < leadFormLockedUntil) {
+      showLeadFormError("Aguarde alguns segundos antes de enviar novamente.");
+      return;
+    }
 
     const formData = new FormData(leadForm);
     const name = String(formData.get("name") || "").trim();
@@ -210,11 +248,56 @@ if (leadForm) {
       return;
     }
 
+    if (window.location.protocol === "https:" && !LEAD_WEBHOOK_URL.startsWith("https://")) {
+      showLeadFormError("Não foi possível enviar seus dados com segurança. Tente novamente em instantes.");
+      return;
+    }
+
     const message = `Olá, meu nome é ${name}. Gostaria de agendar uma avaliação na Neo Fisioterapia e Pilates. Meu telefone é ${phone}.`;
-    const whatsappUrl = `https://wa.me/5561998240564?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const leadPayload = {
+      nome: name,
+      whatsapp: phoneDigits,
+      origem: LEAD_ORIGIN,
+      unidade: LEAD_UNIT,
+    };
 
     showLeadFormError("");
+    lockLeadFormTemporarily();
     leadPhone.value = formatPhone(phoneDigits);
-    window.location.href = whatsappUrl;
+
+    if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push({ event: "lead_form_submit" });
+    }
+
+    const webhookRequest = fetch(LEAD_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(leadPayload),
+      keepalive: true,
+    });
+
+    const whatsappWindow = window.open(whatsappUrl, "_blank", "noopener");
+
+    if (!whatsappWindow) {
+      window.location.href = whatsappUrl;
+    }
+
+    leadForm.reset();
+
+    try {
+      const response = await webhookRequest;
+
+      if (!response.ok) {
+        throw new Error(`Lead webhook responded with status ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Lead webhook error:", error);
+      showLeadFormError(
+        "Seu WhatsApp foi aberto, mas não conseguimos registrar seus dados automaticamente. Se precisar, envie sua mensagem normalmente.",
+      );
+    }
   });
 }
