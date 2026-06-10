@@ -962,6 +962,22 @@ h3 {
   text-align: center;
 }
 
+.form-error {
+  display: none;
+  margin: -4px 0 0;
+  padding: 12px 14px;
+  color: #7a221c !important;
+  background: #fff0ed;
+  border: 1px solid #e4aaa2;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-error.is-visible {
+  display: block;
+}
+
 @media (max-width: 1080px) {
   .lead-section,
   .contact-section,

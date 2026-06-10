@@ -124,7 +124,66 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 }
 
+const formatPhone = (value) => {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  const ddd = digits.slice(0, 2);
+  const firstPart = digits.length > 10 ? digits.slice(2, 7) : digits.slice(2, 6);
+  const secondPart = digits.length > 10 ? digits.slice(7, 11) : digits.slice(6, 10);
+
+  if (digits.length <= 2) {
+    return ddd ? `(${ddd}` : "";
+  }
+
+  if (!secondPart) {
+    return `(${ddd}) ${firstPart}`;
+  }
+
+  return `(${ddd}) ${firstPart}-${secondPart}`;
+};
+
+const getPhoneDigits = (value) => value.replace(/\D/g, "");
+
+const isValidBrazilPhone = (value) => {
+  const digits = getPhoneDigits(value);
+
+  if (digits.length !== 10 && digits.length !== 11) {
+    return false;
+  }
+
+  if (/^(\d)\1+$/.test(digits)) {
+    return false;
+  }
+
+  const ddd = Number(digits.slice(0, 2));
+
+  return ddd >= 11 && ddd <= 99;
+};
+
 const leadForm = document.querySelector("#leadForm");
+const leadPhone = document.querySelector("#leadPhone");
+const leadFormError = document.querySelector("#leadFormError");
+
+const showLeadFormError = (message) => {
+  if (!leadFormError) return;
+
+  leadFormError.textContent = message;
+  leadFormError.classList.toggle("is-visible", Boolean(message));
+};
+
+if (leadPhone) {
+  leadPhone.addEventListener("input", () => {
+    leadPhone.value = formatPhone(leadPhone.value);
+    leadPhone.setCustomValidity("");
+    leadPhone.removeAttribute("aria-invalid");
+    showLeadFormError("");
+  });
+
+  leadPhone.addEventListener("paste", (event) => {
+    event.preventDefault();
+    const pastedText = event.clipboardData?.getData("text") || "";
+    leadPhone.value = formatPhone(pastedText);
+  });
+}
 
 if (leadForm) {
   leadForm.addEventListener("submit", (event) => {
@@ -133,9 +192,29 @@ if (leadForm) {
     const formData = new FormData(leadForm);
     const name = String(formData.get("name") || "").trim();
     const phone = String(formData.get("phone") || "").trim();
+    const phoneDigits = getPhoneDigits(phone);
+
+    if (!name || name.length < 2) {
+      showLeadFormError("Informe seu nome para continuar.");
+      leadForm.querySelector("#leadName")?.focus();
+      return;
+    }
+
+    if (!isValidBrazilPhone(phone)) {
+      const message = "Informe um telefone válido com DDD. Use apenas números.";
+      showLeadFormError(message);
+      leadPhone?.setCustomValidity(message);
+      leadPhone?.setAttribute("aria-invalid", "true");
+      leadPhone?.reportValidity();
+      leadPhone?.focus();
+      return;
+    }
+
     const message = `Olá, meu nome é ${name}. Gostaria de agendar uma avaliação na Neo Fisioterapia e Pilates. Meu telefone é ${phone}.`;
     const whatsappUrl = `https://wa.me/5561998240564?text=${encodeURIComponent(message)}`;
 
+    showLeadFormError("");
+    leadPhone.value = formatPhone(phoneDigits);
     window.location.href = whatsappUrl;
   });
 }

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -15,7 +15,7 @@
       name="description"
       content="Clínica de fisioterapia especializada, pilates, RPG, acupuntura e terapia por ondas de choque em Águas Claras, Brasília."
     />
-    <link rel="stylesheet" href="./styles.css?v=20" />
+    <link rel="stylesheet" href="../styles.css?v=20" />
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -26,19 +26,19 @@
       <a class="brand" href="#inicio" aria-label="Neo Fisioterapia e Pilates">
         <img
           class="brand-logo"
-          src="./assets/brand/logo-neo.png"
+          src="../assets/brand/logo-neo.png"
           alt="Neo Fisioterapia e Pilates"
         />
       </a>
       <nav class="nav" aria-label="Navegação principal">
-        <a href="/lp#agendamento">Agendamento</a>
+        <a href="#agendamento">Agendamento</a>
         <a href="#servicos">Tratamentos</a>
         <a href="#corpo-clinico">Corpo clínico</a>
         <a href="#jornada">Atendimento</a>
         <a href="#espaco">Espaço</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="header-action" href="/lp#agendamento">Agendar</a>
+      <a class="header-action" href="#agendamento">Agendar</a>
     </header>
 
     <main id="inicio">
@@ -50,12 +50,12 @@
             melhorar postura e acompanhar sua evolução com procedimentos completos.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="/lp#agendamento">Agendar avaliação</a>
+            <a class="button primary" href="#agendamento">Agendar avaliação</a>
           </div>
         </div>
         <div class="hero-media">
           <img
-            src="./assets/space/recepcao-1.jpg"
+            src="../assets/space/recepcao-1.jpg"
             alt="Recepção da Neo Fisioterapia e Pilates"
           />
         </div>
@@ -69,26 +69,79 @@
         <div class="differentials-grid">
           <article>
             <span class="differential-icon" aria-hidden="true">
-              <img src="./assets/icons/clipboard-check.svg" alt="" />
+              <img src="../assets/icons/clipboard-check.svg" alt="" />
             </span>
             <strong>+40 convênios atendidos</strong>
             <span>Facilidade para quem utiliza convênio no tratamento.</span>
           </article>
           <article>
             <span class="differential-icon" aria-hidden="true">
-              <img src="./assets/icons/network.svg" alt="" />
+              <img src="../assets/icons/network.svg" alt="" />
             </span>
             <strong>Atendimento multi-especializado</strong>
             <span>Especialidades de fisioterapia, Pilates, RPG, acupuntura e ondas de choque.</span>
           </article>
           <article>
             <span class="differential-icon" aria-hidden="true">
-              <img src="./assets/icons/map-pin.svg" alt="" />
+              <img src="../assets/icons/map-pin.svg" alt="" />
             </span>
             <strong>Fácil acesso</strong>
             <span>Loja térrea no Albany Medical Center, em Águas Claras.</span>
           </article>
         </div>
+      </section>
+
+      <section class="lead-section" id="agendamento">
+        <div class="lead-copy">
+          <p class="eyebrow">Agendamento pelo WhatsApp</p>
+          <h2>Preencha seus dados para falar com a clínica.</h2>
+          <p>
+            Informe nome e telefone. Em seguida, você será direcionado ao
+            WhatsApp da Neo para combinar o melhor horário de atendimento.
+          </p>
+          <ul class="lead-benefits" aria-label="Vantagens do contato">
+            <li>Retorno direto pela equipe</li>
+            <li>Orientação sobre convênios e procedimentos</li>
+            <li>Contato rápido para agendar sua avaliação</li>
+          </ul>
+        </div>
+        <form class="lead-form" id="leadForm">
+          <div class="lead-form-header">
+            <strong>Entre em contato agora</strong>
+            <span>Preencha os 2 campos abaixo para falar conosco</span>
+          </div>
+          <div class="lead-field">
+            <label for="leadName">Seu nome</label>
+            <input
+              id="leadName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Ex: Maria Silva"
+              required
+            />
+          </div>
+          <div class="lead-field">
+            <label for="leadPhone">Seu telefone</label>
+            <input
+              id="leadPhone"
+              name="phone"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel"
+              placeholder="(61) 99999-9999"
+              maxlength="15"
+              pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}"
+              title="Digite um telefone válido com DDD"
+              required
+            />
+          </div>
+          <button class="button primary" type="submit">Entrar em contato</button>
+          <p class="form-error" id="leadFormError" aria-live="polite"></p>
+          <p class="form-note">
+            O botão abre o WhatsApp da clínica com seus dados preenchidos.
+          </p>
+        </form>
       </section>
 
       <section class="section intent-section" aria-labelledby="intent-title">
@@ -141,7 +194,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-ortopedica">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/orthopaedics-outline.svg" alt="" />
+                <img src="../assets/icons/orthopaedics-outline.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia Ortopédica</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -153,7 +206,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-traumatologica">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/traumatism-outline.svg" alt="" />
+                <img src="../assets/icons/traumatism-outline.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia Traumatológica</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -165,7 +218,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-pelvica">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/gynecology-outline.svg" alt="" />
+                <img src="../assets/icons/gynecology-outline.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia Pélvica</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -182,7 +235,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-ortognatica">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/dental-hygiene-outline.svg" alt="" />
+                <img src="../assets/icons/dental-hygiene-outline.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia Ortognática</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -194,7 +247,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-dtm">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/dental.svg" alt="" />
+                <img src="../assets/icons/dental.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia em DTM</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -206,7 +259,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-vestibular">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/dizzy-outline.svg" alt="" />
+                <img src="../assets/icons/dizzy-outline.svg" alt="" />
               </span>
               <span class="service-title">Fisioterapia Vestibular</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -218,7 +271,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-pilates">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/yoga.svg" alt="" />
+                <img src="../assets/icons/yoga.svg" alt="" />
               </span>
               <span class="service-title">Pilates</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -230,7 +283,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-rpg">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/spine-outline.svg" alt="" />
+                <img src="../assets/icons/spine-outline.svg" alt="" />
               </span>
               <span class="service-title">RPG</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -242,7 +295,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-acupuntura">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/needle.svg" alt="" />
+                <img src="../assets/icons/needle.svg" alt="" />
               </span>
               <span class="service-title">Acupuntura</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -254,7 +307,7 @@
           <article class="service-card">
             <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-ondas">
               <span class="service-icon" aria-hidden="true">
-                <img src="./assets/icons/wave-saw-tool.svg" alt="" />
+                <img src="../assets/icons/wave-saw-tool.svg" alt="" />
               </span>
               <span class="service-title">Terapia por Ondas de Choque</span>
               <span class="service-arrow" aria-hidden="true"></span>
@@ -276,35 +329,35 @@
         </div>
         <div class="team-grid">
           <article class="team-card">
-            <img src="./assets/team/arley-acupuntura-rpg.jpg" alt="Dr. Arley, responsável técnico da Neo" loading="lazy" decoding="async" />
+            <img src="../assets/team/arley-acupuntura-rpg.jpg" alt="Dr. Arley, responsável técnico da Neo" loading="lazy" decoding="async" />
             <div class="team-card-copy">
               <h3>Dr. Arley</h3>
               <p>Responsável Técnico</p>
             </div>
           </article>
           <article class="team-card">
-            <img src="./assets/team/cleber-fisioterapia-ortopedica-rpg.jpg" alt="Dr. Cleber, profissional de fisioterapia ortopédica e RPG da Neo" loading="lazy" decoding="async" />
+            <img src="../assets/team/cleber-fisioterapia-ortopedica-rpg.jpg" alt="Dr. Cleber, profissional de fisioterapia ortopédica e RPG da Neo" loading="lazy" decoding="async" />
             <div class="team-card-copy">
               <h3>Dr. Cleber</h3>
               <p>Fisioterapia Ortopédica e RPG</p>
             </div>
           </article>
           <article class="team-card">
-            <img src="./assets/team/ially-fisioterapia-ortopedica.jpg" alt="Dra. Ially, profissional de fisioterapia ortopédica da Neo" loading="lazy" decoding="async" />
+            <img src="../assets/team/ially-fisioterapia-ortopedica.jpg" alt="Dra. Ially, profissional de fisioterapia ortopédica da Neo" loading="lazy" decoding="async" />
             <div class="team-card-copy">
               <h3>Dra. Ially</h3>
               <p>Fisioterapia Ortopédica</p>
             </div>
           </article>
           <article class="team-card">
-            <img src="./assets/team/jackline-pilates.jpg" alt="Dra. Jackline, profissional de Pilates da Neo" loading="lazy" decoding="async" />
+            <img src="../assets/team/jackline-pilates.jpg" alt="Dra. Jackline, profissional de Pilates da Neo" loading="lazy" decoding="async" />
             <div class="team-card-copy">
               <h3>Dra. Jackline</h3>
               <p>Pilates</p>
             </div>
           </article>
           <article class="team-card">
-            <img src="./assets/team/renan-fisioterapia-ortopedica-acupuntura.jpg" alt="Dr. Renan, profissional de fisioterapia ortopédica e acupuntura da Neo" loading="lazy" decoding="async" />
+            <img src="../assets/team/renan-fisioterapia-ortopedica-acupuntura.jpg" alt="Dr. Renan, profissional de fisioterapia ortopédica e acupuntura da Neo" loading="lazy" decoding="async" />
             <div class="team-card-copy">
               <h3>Dr. Renan</h3>
               <p>Fisioterapia Ortopédica e Acupuntura</p>
@@ -424,7 +477,7 @@
           <details>
             <summary>Como faço para agendar?</summary>
             <p>
-              Acesse a página de agendamento e preencha o formulário com nome e telefone. Ele abre uma
+              Preencha o formulário da página com nome e telefone. Ele abre uma
               conversa no WhatsApp da clínica com a mensagem pronta.
             </p>
           </details>
@@ -448,7 +501,7 @@
             ondas de choque em Águas Claras, com cuidado individualizado para
             dor, postura e movimento.
           </p>
-          <a class="button light" href="/lp#agendamento">Agendar avaliação</a>
+          <a class="button light" href="#agendamento">Agendar avaliação</a>
         </div>
         <div class="footer-column">
           <strong>Atendimento</strong>
@@ -483,6 +536,7 @@
       </div>
     </footer>
 
-    <script src="./script.js?v=8"></script>
+    <script src="../script.js?v=8"></script>
   </body>
 </html>
+
