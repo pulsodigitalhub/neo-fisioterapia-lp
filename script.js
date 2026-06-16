@@ -260,6 +260,7 @@ if (leadForm) {
       whatsapp: phoneDigits,
       origem: LEAD_ORIGIN,
       unidade: LEAD_UNIT,
+      pagina: window.location.href,
     };
 
     showLeadFormError("");
