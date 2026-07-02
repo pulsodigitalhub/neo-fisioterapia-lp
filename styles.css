@@ -191,8 +191,11 @@ h3 {
   padding: 0 22px;
   border: 1px solid transparent;
   border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
   font-weight: 800;
   text-align: center;
+  text-decoration: none;
   transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
 }
 
@@ -990,6 +993,146 @@ h3 {
   display: block;
 }
 
+.lead-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+}
+
+.lead-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lead-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 20, 22, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.lead-modal-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1fr);
+  gap: clamp(20px, 4vw, 34px);
+  width: min(980px, 100%);
+  max-height: min(92vh, 820px);
+  overflow: auto;
+  padding: clamp(22px, 4vw, 34px);
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid rgba(232, 213, 156, 0.56);
+  border-radius: 8px;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.32);
+}
+
+.lead-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.lead-modal-copy {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding-right: 4px;
+}
+
+.lead-modal-copy h2 {
+  margin-bottom: 0;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.lead-modal-copy p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.lead-modal-points {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lead-modal-points li {
+  padding: 12px 14px;
+  color: var(--teal);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.lead-modal-form {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.insurance-panel {
+  grid-column: 1 / -1;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.insurance-panel h3 {
+  margin-bottom: 8px;
+  color: var(--teal);
+  font-size: 20px;
+}
+
+.insurance-panel p {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.insurance-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insurance-list li {
+  padding: 8px 10px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
 @media (max-width: 1080px) {
   .lead-section,
   .contact-section,
@@ -1180,6 +1323,47 @@ h3 {
     padding-inline: 16px;
     font-size: 16px;
     line-height: 1.2;
+  }
+
+  .lead-modal {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .lead-modal-dialog {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-height: 92vh;
+    padding: 22px 18px;
+  }
+
+  .lead-modal-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .lead-modal-copy h2 {
+    padding-right: 42px;
+    font-size: 28px;
+  }
+
+  .lead-modal-points {
+    gap: 8px;
+  }
+
+  .lead-modal-points li {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .insurance-panel {
+    padding-top: 14px;
+  }
+
+  .insurance-list {
+    max-height: 150px;
+    overflow: auto;
+    padding-right: 4px;
   }
 
   .map-frame,

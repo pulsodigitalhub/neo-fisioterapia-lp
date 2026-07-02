@@ -172,9 +172,26 @@ const leadForm = document.querySelector("#leadForm");
 const leadPhone = document.querySelector("#leadPhone");
 const leadFormError = document.querySelector("#leadFormError");
 const leadSubmitButton = leadForm?.querySelector('button[type="submit"]');
+const leadSubmitButtonDefaultText = leadSubmitButton?.textContent || "Agendar";
+const leadModal = document.querySelector("#leadModal");
+const leadModalDialog = leadModal?.querySelector(".lead-modal-dialog");
+const leadModalOpeners = document.querySelectorAll("[data-lead-open]");
+const leadModalClosers = document.querySelectorAll("[data-lead-close]");
+const leadInsurancePanel = document.querySelector("#leadInsurance");
 
 let leadFormUnlockTimer = null;
 let leadFormLockedUntil = 0;
+let leadFormStarted = false;
+
+const pushDataLayerEvent = (eventName, params = {}) => {
+  if (!Array.isArray(window.dataLayer)) return;
+
+  window.dataLayer.push({
+    event: eventName,
+    page_path: window.location.pathname,
+    ...params,
+  });
+};
 
 const showLeadFormError = (message) => {
   if (!leadFormError) return;
@@ -189,7 +206,7 @@ const setLeadFormLockedState = (isLocked) => {
   leadForm.dataset.submitting = String(isLocked);
   leadForm.setAttribute("aria-busy", String(isLocked));
   leadSubmitButton.disabled = isLocked;
-  leadSubmitButton.textContent = isLocked ? "Abrindo WhatsApp..." : "Entrar em contato";
+  leadSubmitButton.textContent = isLocked ? "Abrindo..." : leadSubmitButtonDefaultText;
 };
 
 const lockLeadFormTemporarily = () => {
@@ -215,6 +232,65 @@ if (leadPhone) {
     event.preventDefault();
     const pastedText = event.clipboardData?.getData("text") || "";
     leadPhone.value = formatPhone(pastedText);
+  });
+}
+
+const openLeadModal = (trigger = "cta") => {
+  if (!leadModal) return;
+
+  leadModal.classList.add("is-open");
+  leadModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  pushDataLayerEvent("lead_modal_open", { modal_trigger: trigger });
+
+  window.setTimeout(() => {
+    leadForm?.querySelector("input")?.focus();
+  }, 80);
+};
+
+const closeLeadModal = () => {
+  if (!leadModal) return;
+
+  leadModal.classList.remove("is-open");
+  leadModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+};
+
+leadModalOpeners.forEach((opener) => {
+  opener.addEventListener("click", (event) => {
+    event.preventDefault();
+    const trigger = opener.getAttribute("data-lead-trigger") || "cta";
+    const view = opener.getAttribute("data-lead-view");
+    openLeadModal(trigger);
+
+    if (view === "insurance") {
+      window.setTimeout(() => {
+        leadInsurancePanel?.scrollIntoView({ block: "nearest" });
+      }, 120);
+    }
+  });
+});
+
+leadModalClosers.forEach((closer) => {
+  closer.addEventListener("click", closeLeadModal);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && leadModal?.classList.contains("is-open")) {
+    closeLeadModal();
+  }
+});
+
+leadModalDialog?.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+if (leadForm) {
+  leadForm.addEventListener("focusin", () => {
+    if (leadFormStarted) return;
+
+    leadFormStarted = true;
+    pushDataLayerEvent("lead_form_start");
   });
 }
 
@@ -267,9 +343,7 @@ if (leadForm) {
     lockLeadFormTemporarily();
     leadPhone.value = formatPhone(phoneDigits);
 
-    if (Array.isArray(window.dataLayer)) {
-      window.dataLayer.push({ event: "lead_form_submit" });
-    }
+    pushDataLayerEvent("lead_form_submit");
 
     const webhookRequest = fetch(LEAD_WEBHOOK_URL, {
       method: "POST",
@@ -281,6 +355,7 @@ if (leadForm) {
     });
 
     const whatsappWindow = window.open(whatsappUrl, "_blank", "noopener");
+    pushDataLayerEvent("whatsapp_open");
 
     if (!whatsappWindow) {
       window.location.href = whatsappUrl;
