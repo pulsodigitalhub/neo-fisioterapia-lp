@@ -90,7 +90,7 @@ window.addEventListener("resize", () => {
 });
 
 const revealElements = document.querySelectorAll(
-  ".differentials-grid article, .lead-copy, .lead-form, .symptom-list article, .service-card, .team-card, .space-card, .journey-list article, .contact-copy, .map-frame, .faq-list details, .footer-main > *",
+  ".differentials-grid article, .insurance-list li, .insurance-cta, .lead-copy, .lead-form, .symptom-list article, .service-card, .team-card, .space-card, .journey-list article, .contact-copy, .map-frame, .faq-list details, .footer-main > *",
 );
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -177,7 +177,6 @@ const leadModal = document.querySelector("#leadModal");
 const leadModalDialog = leadModal?.querySelector(".lead-modal-dialog");
 const leadModalOpeners = document.querySelectorAll("[data-lead-open]");
 const leadModalClosers = document.querySelectorAll("[data-lead-close]");
-const leadInsurancePanel = document.querySelector("#leadInsurance");
 
 let leadFormUnlockTimer = null;
 let leadFormLockedUntil = 0;
@@ -260,14 +259,7 @@ leadModalOpeners.forEach((opener) => {
   opener.addEventListener("click", (event) => {
     event.preventDefault();
     const trigger = opener.getAttribute("data-lead-trigger") || "cta";
-    const view = opener.getAttribute("data-lead-view");
     openLeadModal(trigger);
-
-    if (view === "insurance") {
-      window.setTimeout(() => {
-        leadInsurancePanel?.scrollIntoView({ block: "nearest" });
-      }, 120);
-    }
   });
 });
 

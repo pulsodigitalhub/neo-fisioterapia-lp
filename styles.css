@@ -610,6 +610,8 @@ h3 {
 }
 
 .differentials-grid article,
+.insurance-list li,
+.insurance-cta,
 .symptom-list article,
 .service-card,
 .team-card,
@@ -621,6 +623,8 @@ h3 {
 }
 
 .differentials-grid article:hover,
+.insurance-list li:hover,
+.insurance-cta:hover,
 .symptom-list article:hover,
 .service-card:hover,
 .team-card:hover,
@@ -1023,7 +1027,7 @@ h3 {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 20px;
-  width: min(680px, 100%);
+  width: min(520px, 100%);
   max-height: min(92vh, 820px);
   overflow: auto;
   padding: clamp(22px, 4vw, 34px);
@@ -1058,22 +1062,18 @@ h3 {
   box-shadow: none;
 }
 
-.insurance-panel {
-  grid-column: 1 / -1;
-  padding-top: 18px;
+.insurance-section {
+  background: var(--paper);
   border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.insurance-panel h3 {
-  margin-bottom: 8px;
-  color: var(--teal);
-  font-size: 20px;
-}
-
-.insurance-panel p {
-  margin-bottom: 14px;
-  color: var(--muted);
-  font-size: 15px;
+.insurance-section-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 18px;
+  max-width: var(--container);
+  margin-inline: auto;
 }
 
 .insurance-list {
@@ -1081,7 +1081,10 @@ h3 {
   flex-wrap: wrap;
   gap: 8px;
   margin: 0;
-  padding: 0;
+  padding: clamp(20px, 3vw, 30px);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
   list-style: none;
 }
 
@@ -1095,6 +1098,34 @@ h3 {
   font-weight: 700;
 }
 
+.insurance-cta {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: clamp(22px, 3vw, 30px);
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid rgba(155, 133, 73, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 22px 54px rgba(29, 29, 27, 0.12);
+}
+
+.insurance-cta strong {
+  color: var(--teal);
+  font-size: 24px;
+  line-height: 1.12;
+}
+
+.insurance-cta p {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.insurance-cta .button {
+  width: 100%;
+}
+
 body.modal-open {
   overflow: hidden;
 }
@@ -1102,6 +1133,7 @@ body.modal-open {
 @media (max-width: 1080px) {
   .lead-section,
   .contact-section,
+  .insurance-section-body,
   .footer-main {
     grid-template-columns: 1fr;
   }
@@ -1307,14 +1339,18 @@ body.modal-open {
     right: 10px;
   }
 
-  .insurance-panel {
-    padding-top: 14px;
+  .insurance-list {
+    gap: 6px;
+    padding: 16px;
   }
 
-  .insurance-list {
-    max-height: 150px;
-    overflow: auto;
-    padding-right: 4px;
+  .insurance-list li {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .insurance-cta {
+    padding: 20px;
   }
 
   .map-frame,
