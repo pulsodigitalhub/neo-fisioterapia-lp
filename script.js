@@ -321,7 +321,8 @@ if (leadForm) {
       return;
     }
 
-    const message = `Olá, meu nome é ${name}. Gostaria de agendar uma avaliação na Neo Fisioterapia e Pilates. Meu telefone é ${phone}.`;
+    const specialty = leadForm.dataset.specialty || "fisioterapia";
+    const message = `Olá, gostaria de atendimento para ${specialty}, por favor. Meu nome é ${name} e meu telefone é ${phone}.`;
     const whatsappUrl = `https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     const leadPayload = {
       nome: name,
