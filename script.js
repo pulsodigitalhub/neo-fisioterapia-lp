@@ -168,6 +168,9 @@ const isValidBrazilPhone = (value) => {
   return ddd >= 11 && ddd <= 99;
 };
 
+const buildWhatsAppMessage = ({ specialty, name, phone }) =>
+  `Olá, gostaria de atendimento para ${specialty}, por favor. Meu nome é ${name} e meu telefone é ${phone}.`;
+
 const leadForm = document.querySelector("#leadForm");
 const leadPhone = document.querySelector("#leadPhone");
 const leadFormError = document.querySelector("#leadFormError");
@@ -322,7 +325,7 @@ if (leadForm) {
     }
 
     const specialty = leadForm.dataset.specialty || "fisioterapia";
-    const message = `Olá, gostaria de atendimento para ${specialty}, por favor. Meu nome é ${name} e meu telefone é ${phone}.`;
+    const message = buildWhatsAppMessage({ specialty, name, phone });
     const whatsappUrl = `https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     const leadPayload = {
       nome: name,
