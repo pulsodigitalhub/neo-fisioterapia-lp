@@ -327,13 +327,14 @@ if (leadForm) {
     const specialty = leadForm.dataset.specialty || "fisioterapia";
     const message = buildWhatsAppMessage({ specialty, name, phone });
     const whatsappUrl = `https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    const leadPayload = {
+    const tracking = typeof window.getTracking === "function" ? window.getTracking() : {};
+    const leadPayload = Object.assign({
       nome: name,
       whatsapp: phoneDigits,
       origem: LEAD_ORIGIN,
       unidade: LEAD_UNIT,
       pagina: window.location.href,
-    };
+    }, tracking);
 
     showLeadFormError("");
     lockLeadFormTemporarily();
