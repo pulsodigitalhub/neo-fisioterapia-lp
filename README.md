@@ -4,7 +4,7 @@ Landing page estática para preview da Neo Fisioterapia e Pilates.
 
 ## Preview
 
-Publicada via Vercel.
+Publicada via Vercel. Repositório público.
 
 ## Variações por convênio
 
