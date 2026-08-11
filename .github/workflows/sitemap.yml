@@ -7,9 +7,6 @@ on:
       - 'public/sitemap.xml'
       - 'sitemap.xml'
 
-permissions:
-  contents: write
-
 concurrency:
   group: sitemap-${{ github.ref }}
   cancel-in-progress: true
@@ -17,8 +14,12 @@ concurrency:
 jobs:
   sitemap:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -26,17 +27,19 @@ jobs:
 
       - name: Gerar sitemap.xml
         env:
-          SITEMAP_BASE_URL: https://www.neofisioterapia.com.br
+          SITEMAP_BASE_URL: "https://www.neofisioterapia.com.br"
         run: node scripts/generate-sitemap.mjs
 
       - name: Commitar sitemap.xml se mudou
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$(git status --porcelain -- '*sitemap.xml')" ]; then
             git config user.name "sitemap-bot"
             git config user.email "sitemap-bot@users.noreply.github.com"
             git add -- '*sitemap.xml'
             git commit -m "chore: atualiza sitemap.xml automaticamente"
-            git push
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" "HEAD:${GITHUB_REF_NAME}"
           else
             echo "sitemap.xml sem mudanças"
           fi
