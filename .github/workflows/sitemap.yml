@@ -1,0 +1,42 @@
+name: Generate sitemap.xml
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'public/sitemap.xml'
+      - 'sitemap.xml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sitemap-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Gerar sitemap.xml
+        env:
+          SITEMAP_BASE_URL: https://www.neofisioterapia.com.br
+        run: node scripts/generate-sitemap.mjs
+
+      - name: Commitar sitemap.xml se mudou
+        run: |
+          if [ -n "$(git status --porcelain -- '*sitemap.xml')" ]; then
+            git config user.name "sitemap-bot"
+            git config user.email "sitemap-bot@users.noreply.github.com"
+            git add -- '*sitemap.xml'
+            git commit -m "chore: atualiza sitemap.xml automaticamente"
+            git push
+          else
+            echo "sitemap.xml sem mudanças"
+          fi
