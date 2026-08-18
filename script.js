@@ -146,7 +146,7 @@ const formatPhone = (value) => {
 
 const getPhoneDigits = (value) => value.replace(/\D/g, "");
 
-const LEAD_WEBHOOK_URL = "https://api.icebergcompany.com.br/lead-webhook/neofisioterapia";
+const LEAD_WEBHOOK_URL = "https://leads-clientes.sergioshouse.com.br/neo";
 const LEAD_ORIGIN = "neo-fisioterapia-lp";
 const LEAD_UNIT = "Neo Fisioterapia e Pilates";
 const LEAD_WHATSAPP_NUMBER = "5561998240564";
