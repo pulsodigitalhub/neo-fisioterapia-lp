@@ -30,6 +30,16 @@ jobs:
           SITEMAP_BASE_URL: "https://www.neofisioterapia.com.br"
         run: node scripts/generate-sitemap.mjs
 
+      # Lista completa (LPs inclusive) para o menu Clientes do Link HUB.
+      # Token com escopo unico linkhub.paginas:write; sem o secret, so pula.
+      - name: Enviar paginas ao Link HUB
+        env:
+          SITEMAP_BASE_URL: "https://www.neofisioterapia.com.br"
+          LINKHUB_TOKEN: ${{ secrets.LINKHUB_PAGINAS_TOKEN }}
+          LINKHUB_AGENCIA: hound
+          LINKHUB_SLUG: neo-fisioterapia
+        run: node scripts/enviar-paginas.mjs
+
       - name: Commitar sitemap.xml se mudou
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
