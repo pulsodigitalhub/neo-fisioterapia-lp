@@ -4,6 +4,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { carregarRegrasNoindex, ehNoindex } from './regras-noindex.mjs';
 
 const BASE_URL = process.env.SITEMAP_BASE_URL;
 if (!BASE_URL) {
@@ -19,6 +20,7 @@ try {
 }
 
 const ROOT = process.cwd();
+const regras = carregarRegrasNoindex(ROOT);
 const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next', 'docs', 'scripts']);
 
 function findPages(dir, base) {
@@ -78,12 +80,34 @@ function toUrl(r) {
 }
 
 const base = BASE_URL.replace(/\/$/, '');
-const paginas = [...routes].sort().map((r) => {
+const paginas = [...routes].map((r) => {
   const html = fs.readFileSync(routeFiles.get(r), 'utf8');
   const noindex = /<meta[^>]+name=["']robots["'][^>]*content=["'][^"']*noindex|<meta[^>]+content=["'][^"']*noindex[^>]*name=["']robots["']/i.test(html);
   const titulo = html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1].trim().slice(0, 200) || null;
-  return { url: `${base}${toUrl(r)}`, titulo, indexavel: !noindex };
+  const url = `${base}${toUrl(r)}`;
+  return { url, titulo, indexavel: !noindex && !ehNoindex(new URL(url).pathname, regras) };
 });
+
+// SPA tem rota que não vira arquivo; o sitemap do repo cobre essas.
+const sitemapPath = [path.join(ROOT, 'public', 'sitemap.xml'), path.join(ROOT, 'sitemap.xml')].find(fs.existsSync);
+if (sitemapPath) {
+  const baseHostname = new URL(BASE_URL).hostname.replace(/^www\./, '');
+  const knownPaths = new Set(paginas.map(({ url }) => new URL(url).pathname));
+  const sitemap = fs.readFileSync(sitemapPath, 'utf8');
+  for (const [, loc] of sitemap.matchAll(/<loc>([\s\S]*?)<\/loc>/gi)) {
+    try {
+      const url = new URL(loc.trim());
+      const pathname = url.pathname.endsWith('.html') ? url.pathname : `${url.pathname.replace(/\/$/, '')}/`;
+      if (url.hostname.replace(/^www\./, '') === baseHostname && !knownPaths.has(pathname)) {
+        const paginaUrl = `${base}${pathname}`;
+        paginas.push({ url: paginaUrl, titulo: null, indexavel: !ehNoindex(new URL(paginaUrl).pathname, regras) });
+        knownPaths.add(pathname);
+      }
+    } catch {}
+  }
+}
+
+paginas.sort((a, b) => a.url.localeCompare(b.url));
 
 const token = process.env.LINKHUB_TOKEN?.trim();
 if (!token) {

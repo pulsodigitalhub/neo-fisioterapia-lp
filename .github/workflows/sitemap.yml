@@ -30,6 +30,10 @@ jobs:
           SITEMAP_BASE_URL: "https://www.neofisioterapia.com.br"
         run: node scripts/generate-sitemap.mjs
 
+      # LP de anuncio (X-Robots-Tag noindex no vercel.json) sai do sitemap
+      - name: Tirar LPs do sitemap
+        run: node scripts/filtrar-sitemap-noindex.mjs
+
       # Lista completa (LPs inclusive) para o menu Clientes do Link HUB.
       # Token com escopo unico linkhub.paginas:write; sem o secret, so pula.
       - name: Enviar paginas ao Link HUB
